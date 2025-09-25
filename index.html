@@ -1,0 +1,941 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="description"
+        content="Deformable Neural Radiance Fields creates free-viewpoint portraits (nerfies) from casually captured videos.">
+  <meta name="keywords" content="Multi-modal Knowledge Graph">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>VAT-KG: Knowledge-Intensive Multimodal Knowledge Graph Dataset for Retrieval-Augmented Generation</title>
+
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-PYVRSFMDRL"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+
+    function gtag() {
+      dataLayer.push(arguments);
+    }
+
+    gtag('js', new Date());
+
+    gtag('config', 'G-PYVRSFMDRL');
+  </script>
+
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro"
+        rel="stylesheet">
+<!-- Material Icons -->
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+  <link rel="stylesheet" href="./static/css/bulma.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-carousel.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-slider.min.css">
+  <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
+  <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="./static/css/index.css">
+  <link rel="icon" href="./static/images/favicon.svg">
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script defer src="./static/js/fontawesome.all.min.js"></script>
+  <script src="./static/js/bulma-carousel.min.js"></script>
+  <script src="./static/js/bulma-slider.min.js"></script>
+  <script src="./static/js/index.js"></script>
+
+</head>
+
+<body>
+
+
+<section class="hero">
+  <div class="hero-body">
+    <!-- <div class="container is-max-desktop"> -->
+      <div class="container is-max-widescreen">
+
+      <div class="columns is-centered">
+        <div class="column has-text-centered">
+          <h1 class="title is-1 publication-title">VAT-KG: Knowledge-Intensive Multimodal Knowledge Graph Dataset for Retrieval-Augmented Generation</h1>
+          <div class="is-size-5 publication-authors">
+            <span class="author-block">
+              <a href="">International Conference on Learning Representations 2026</a></span>
+              <br/>
+
+            <span class="author-block">
+              Paper ID : 15407</span>
+          </div>
+
+
+<!-- <div class="is-size-5 publication-authors">
+            <span class="author-block"><sup></sup></span>
+            <span class="author-block"><sup></sup></span>
+          </div> -->
+
+          <div class="column has-text-centered">
+            <div class="publication-links">
+              <!-- PDF Link. -->
+              <!-- <span class="link-block">
+                <a href=""
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="fas fa-file-pdf"></i>
+                  </span>
+                  <span>Paper</span>
+                </a>
+              </span>
+              <span class="link-block">
+                <a href=""
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="ai ai-arxiv"></i>
+                  </span> -->
+                  <!-- <span>arXiv</span> -->
+                </a>
+              </span>
+              <!-- Video Link. -->
+              <!-- <span class="link-block">
+                <a href=""
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="fab fa-youtube"></i>
+                  </span>
+                  <span>Video</span>
+                </a>
+              </span> -->
+              <!-- Code Link. -->
+              <!-- <span class="link-block">
+                <a href="https://huggingface.co/iclr26/VATKG_CODE"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="fab fa-github"></i>
+                  </span>
+                  <span>Code</span>
+                  </a>
+              </span> -->
+              <span class="link-block">
+                <a href="https://huggingface.co/iclr26/VATKG_CODE"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                    <img src="https://huggingface.co/front/assets/huggingface_logo-noborder.svg" style="height: 1.2em;" alt="HF"/>
+                  </span>
+                  <span>Code</span>
+                </a>
+              </span>
+              <!-- Dataset Link. -->
+              <span class="link-block">
+                <a href="https://huggingface.co/datasets/iclr26/vat_kg"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="far fa-images"></i>
+                  </span>
+                  <span>Data</span>
+                  </a>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="hero teaser">
+  <!-- <div class="container is-max-desktop"> -->
+    <div class="container is-max-widescreen">
+
+    <div class="hero-body">
+    <!-- Overview -->
+    <div class="columns is-centered has-text-centered" style="width: 100%; margin: 10px 10px 0;">
+        <div class="column" style="width: 100%; padding: 0;">
+            <h2 class="title is-3"> Overview </h2>
+        <img src="./static/overview_v12.png" alt="Teaser" style="width: 100%; margin-bottom:10px; height: auto;" />
+        <figcaption class="custom-caption">
+          <strong> VAT-KG Overview.</strong> 
+          An overview of the VAT-KG construction pipeline. The construction of VAT-KG involves four stages: (1) Multimodal Alignment Filtering, ensuring correlation across modalities; (2) Knowledge-Intensive Recaptioning, which transforms base text into rich, knowledge-intensive caption based on meta information; (3) Multimodal Triplet Grounding, which aligns triplets with corresponding multimodal context; (4) Cross-Modal Description Alignment, which retrieves fine-grained descriptions from external knowledge bases and matches them to each multimodal triplet.
+      </figcaption>
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+
+<section class="section" style="background-color:#efeff081; padding-bottom: 0rem;" id="Abstract">
+    <!-- <div class="container is-max-desktop"> -->
+    <div class="container">
+
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-six-fifths">
+        <h2 class="title is-3">Abstract</h2>
+        <div class="content has-text-justified">
+          <p>
+            Multimodal Knowledge Graphs (MMKGs), which represent explicit knowledge across multiple modalities, play a pivotal role by complementing the implicit knowledge of Multimodal Large Language Models (MLLMs) and enabling more grounded reasoning via Retrieval Augmented Generation (RAG).
+            However, existing MMKGs are generally limited in scope: they are often constructed by augmenting pre-existing knowledge graphs, which restricts their knowledge, resulting in outdated or incomplete knowledge coverage, and they often support only a narrow range of modalities, such as text and visual information.
+            These limitations reduce their extensibility and applicability to a broad range of multimodal tasks, particularly as the field shifts toward richer modalities such as video and audio in recent MLLMs.
+            Therefore, we propose the Visual-Audio-Text Knowledge Graph (VAT-KG), the first concept-centric and knowledge-intensive multimodal knowledge graph that covers visual, audio, and text information, where each triplet is linked to multimodal data and enriched with detailed descriptions of concepts.
+            Specifically, our construction pipeline ensures cross-modal knowledge alignment between multimodal data and fine-grained semantics through a series of stringent filtering and alignment steps, enabling the automatic generation of MMKGs from any multimodal dataset.
+            We further introduce a novel multimodal RAG framework that retrieves detailed concept-level knowledge in response to queries from arbitrary modalities.
+            Experiments on question answering tasks across various modalities demonstrate the effectiveness of VAT-KG in supporting MLLMs, highlighting its practical value in unifying and leveraging multimodal knowledge. 
+          </p>
+        </div>
+      </div>
+    </div>
+
+<!--Presentation Video -->
+<section class="section">
+  <div class="container">
+    <div class="columns is-centered has-text-centered">
+      <div class="column">
+        <h2 class="title is-3">Presentation Video</h2>
+        
+        <div class="video-card" style="
+          background-color: #ebebeb;
+          border-radius: 12px;
+          box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+          padding: 16px 16px 8px 16px;  
+          max-width: 800px;
+          margin: 0 auto;
+        ">
+         
+        <video width="800" height="360" controls>
+            <source src="./static/vatkg-neurips-655_video.mp4" type="video/mp4">
+          </video>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+</section>
+
+
+<br><br/>
+
+<section class="section" id="VAT-KG Dataset Tables">
+  <div class="columns is-centered has-text-centered">
+    <div class="column is-six-fifths">
+      <h2 class="title is-3"> VAT-KG Dataset (100K)</h2>
+    </div>
+  </div>
+  <!-- <div class="container is-max-desktop"> -->
+    <div class="container is-max-widescreen">
+    <div class="columns is-centered">
+      <div class="column is-full-width">
+        <div class="content has-text-justified">
+          <style>
+            table.GeneratedTable {
+              width: 100%;
+              background-color: #ffffff;
+              border-collapse: collapse;
+              border-width: 2px;
+              border-color: #83aab6;
+              border-style: solid;
+              color: #000000;
+              text-align: center;
+            }
+            
+            table.GeneratedTable td, table.GeneratedTable th {
+              border-width: 2px;
+              border-color: #939fa4;
+              border-style: solid;
+              padding: 3px;
+              text-align: center; 
+            }
+            
+            table.GeneratedTable thead {
+              background-color: #6691ee;
+            }
+
+          </style>
+          <div class="column is-six-fifths" width="80%">
+            <table class="GeneratedTable" border="1" cellspacing="0" cellpadding="5">
+              <thead>
+                <tr>
+                  <th>Dataset</th>
+                  <th>Year</th>
+                  <th>Text</th>
+                  <th>Image</th>
+                  <th>Audio</th>
+                  <th>Video</th>
+                  <th>Concept centric</th>
+                  <th>Downstream task</th>
+                  <th>Data source</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>IMGpedia</td>
+                  <td>2017</td>
+                  <td>✔︎</td><td>✔︎</td><td>✗</td><td>✗</td>
+                  <td>✗</td>
+                  <td>Link-prediction</td>
+                  <td>Wikimedia Commons, DBpedia</td>
+                </tr>
+                <tr>
+                  <td>ImageGraph</td>
+                  <td>2017</td>
+                  <td>✔︎</td><td>✔︎</td><td>✗</td><td>✗</td>
+                  <td>✗</td>
+                  <td>Local Ranking</td>
+                  <td>FB15k</td>
+                </tr>
+                <tr>
+                  <td>MMKG</td>
+                  <td>2019</td>
+                  <td>✔︎</td><td>✔︎</td><td>✗</td><td>✗</td>
+                  <td>✗</td>
+                  <td>Link-prediction, Reasoning</td>
+                  <td>FB15k, DB15k, YAGO15k, Search Engine</td>
+                </tr>
+                <tr>
+                  <td>Richpedia</td>
+                  <td>2020</td>
+                  <td>✔︎</td><td>✔︎</td><td>✗</td><td>✗</td>
+                  <td>✗</td>
+                  <td>Retrieval</td>
+                  <td>Wikidata, Wikimedia, Search Engine</td>
+                </tr>
+                <tr>
+                  <td>VisualSem</td>
+                  <td>2020</td>
+                  <td>✔︎</td><td>✔︎</td><td>✗</td><td>✗</td>
+                  <td>✗</td>
+                  <td>Retrieval</td>
+                  <td>BabelNet</td>
+                </tr>
+                <tr>
+                  <td>MarKG</td>
+                  <td>2023</td>
+                  <td>✔︎</td><td>✔︎</td><td>✗</td><td>✗</td>
+                  <td>✔︎</td>
+                  <td>Link-prediction, Reasoning</td>
+                  <td>Wikipedia, Search Engine</td>
+                </tr>
+                <tr>
+                  <td>AspectMMKG</td>
+                  <td>2023</td>
+                  <td>✔︎</td><td>✔︎</td><td>✗</td><td>✗</td>
+                  <td>✔︎</td>
+                  <td>Entity aspect linking</td>
+                  <td>Wikipedia, Search Engine</td>
+                </tr>
+                <tr>
+                  <td>VCTKG</td>
+                  <td>2023</td>
+                  <td>✔︎</td><td>✔︎</td><td>✗</td><td>✗</td>
+                  <td>✔︎</td>
+                  <td>Link-prediction</td>
+                  <td>ConceptNet, WordNet</td>
+                </tr>
+                <tr>
+                  <td>TIVA-KG</td>
+                  <td>2023</td>
+                  <td>✔︎</td><td>✔︎</td><td>✗</td><td>✔︎</td>
+                  <td>✗</td>
+                  <td>Link-prediction</td>
+                  <td>Wikipedia, Search Engine</td>
+                </tr>
+                <tr>
+                  <td>UKnow</td>
+                  <td>2024</td>
+                  <td>✔︎</td><td>✔︎</td><td>✗</td><td>✔︎</td>
+                  <td>✔︎</td>
+                  <td>Reasoning, Retrieval</td>
+                  <td>Wikipedia, News</td>
+                </tr>
+                <tr>
+                  <td>M<sup>2</sup>ConceptBase</td>
+                  <td>2024</td>
+                  <td>✔︎</td><td>✔︎</td><td>✗</td><td>✔︎</td>
+                  <td>✔︎</td>
+                  <td>VQA</td>
+                  <td>Image-text Corpora, Encyclopedia, LLM</td>
+                </tr>
+                <tr bgcolor="#d3d3d3">
+                  <td><b>VAT-KG</b></td>
+                  <td><b>2025</b></td>
+                  <td>✔︎</td><td>✔︎</td><td>✔︎</td><td>✔︎</td>
+                  <td>✔︎</td>
+                  <td>AQA, VQA, AVQA</td>
+                  <td>Video-Audio-Text Corpora,Encyclopedia, LLM</td>
+                </tr>
+              </tbody>
+            </table>
+            <div class="has-text-centered">
+              <figcaption class="custom-caption">
+                <strong>Comparison of VAT-KG with existing MMKGs.</strong>  </figcaption>             
+          </div>
+
+          <br><br/>
+          <div class="column is-six-fifths" width="80%">
+            <table class="GeneratedTable" border="1" cellspacing="0" cellpadding="5">
+              <thead>
+
+                <tr>
+                  <th>Principle</th>
+                  <th>InternVid-FLT(10%)</th>
+                  <th>AudioCaps</th>
+                  <th>AVQA</th>
+                  <th>VALOR-32k</th>
+                  <th>Total</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><i>Original</i></td>
+                  <td>1,000,000</td>
+                  <td>93,726</td>
+                  <td>40,150</td>
+                  <td>28,823</td>
+                  <td>1,162,699</td>
+                </tr>
+                <tr>
+                  <td>Audio Tagging</td>
+                  <td>389,965</td>
+                  <td>86,578</td>
+                  <td>36,144</td>
+                  <td>22,521</td>
+                  <td>535,208</td>
+                </tr>
+                <tr>
+                  <td>Audio-Text</td>
+                  <td>15,490</td>
+                  <td>77,964</td>
+                  <td>27,864</td>
+                  <td>15,250</td>
+                  <td>136,568</td>
+                </tr>
+                <tr>
+                  <td>Video-Text</td>
+                  <td>13,941</td>
+                  <td>70,167</td>
+                  <td>25,077</td>
+                  <td>13,725</td>
+                  <td>124,295</td>
+                </tr>
+                <tr style="background-color:#e0e0e0;">
+                  <td><b>Final</b></td>
+                  <td>12,464</td>
+                  <td>59,808</td>
+                  <td>24,999</td>
+                  <td>12,947</td>
+                  <td><b>110,218</b></td>
+                </tr>
+              </tbody>
+            </table>
+            <div class="has-text-centered">
+              <figcaption class="custom-caption">
+                <strong> Data sample counts at each stage of the filtering process </strong>  </figcaption>             
+          </div>
+              </div>
+            </div>
+          </p>
+          </b></font>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+    <!-- Statistics-->
+    <section class="section">
+      <div class="container">
+        <div class="columns is-centered has-text-centered">
+          <div class="column">
+            <h2 class="title is-3">Statistics</h2>
+            <div class="dataset-statistics">
+              <img src="./static/statistics_v4.png" alt="Dataset statistics" style="width: 100%; margin-bottom:10px; height: auto;" />
+              <figcaption class="custom-caption">
+                <strong> Statistics of VAT-KG.</strong> 
+                (a) VAT-KG contains diverse concepts that are represented through
+                varied multimodal data. (b) Concept-level descriptions linked to VAT-KG concepts are sufficiently
+                comprehensive and informative. (c) VAT-KG ensures diversity across categories.
+              </figcaption>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    
+
+
+<section class="section">
+  <div class="container is-max-desktop">
+
+    <div class="columns is-centered">
+
+      <!-- MMKGs -->
+      <div class="column">
+        <div class="content">
+          <h2 class="title is-3">MMKGs</h2>
+          <p>
+            (a) A non-concept-centric case involving various
+            modalities. (b) Concept-centric case with limited
+            modalities. (c) Our proposed VAT-KG, which is
+            concept-centric and covers four modalities.
+          </p>
+          <img src="./static/teaser_new_v3.png" alt="Teaser" style="width: 100%; margin-bottom:10px; height: auto;" />
+
+        </div>
+      </div>
+      <!--/ Existing MMKGs. -->
+
+      <!-- Triplet Example -->
+      <div class="column">
+        <h2 class="title is-3">Example Triplet in VAT-KG</h2>
+        <div class="columns is-centered">
+          <div class="column content">
+            <p>
+              A multi-modal triplet from VAT-KG, composed of video,
+              audio, and text. Each head and tail is linked to a
+              detailed concept-level description.
+            </p>
+
+            <img src="./static/teaser_mod_v4.png" alt="Teaser" style="width: 100%; margin-bottom:10px; height: auto;" />
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--/ MMKGs. -->
+
+    <br><br/>    
+       <!-- Statistics-->
+       <section class="section">
+        <!-- <div class="container"> -->
+          <div class="columns is-centered has-text-centered">
+            <div class="column">
+              <h2 class="title is-3">Multimodal RAG Framework</h2>
+              <div class="dataset-statistics">
+                <img src="./static/pipeline_v10.png" alt="Dataset statistics" style="width: 100%; margin-bottom:10px; height: auto;" />
+                <figcaption class="custom-caption">
+                  <strong> An overview of Multimodal RAG Framework.</strong> 
+                   Given a query from any modality (audio,
+                  video, or text), (1) Modality-Agnostic Retrieval retrieves up to five semantically relevant triplets from
+                  VAT-KG based on embedding similarity; (2) Retrieval Checker filters out misaligned triplets by using
+                  the text encoder of the same multimodal foundation model; (3) Augmented Generation with MLLMs
+                  that support audio-visual understanding.
+                </figcaption>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+<br>  <br/>
+
+
+<!-- QA Section -->
+<style>
+  .chat-bubble {
+    background: #f4f4f4;
+    border-radius: 12px;
+    padding: 12px;
+    margin-bottom: 10px;
+    width: 100%;
+    font-family: 'Segoe UI', sans-serif;
+    font-size: 0.98rem;
+    line-height: 1.5;
+    color: #000000;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  }
+
+  .chat-bubble.user {
+    background: #e3f2fd;
+    border-bottom: 2px solid #90caf9;
+  }
+
+  .chat-bubble.vl2 {
+    background: #e4fde3;
+    border-bottom: 2px solid #b3f990;
+  }
+  .chat-bubble.vl2-ours {
+    background: #d9f8b3;
+  }
+
+  .chat-bubble.qwen {
+    background: #fdf3e3;
+    border-bottom: 2px solid #f9cd90;
+  }
+
+  .chat-bubble.qwen-ours {
+    background: #ffe2b7;
+  }
+
+  .chat-video-wrapper {
+    margin-bottom: 8px;
+  }
+
+  .chat-video-wrapper video {
+    width: 100%;
+    max-height: 240px;
+    border-radius: 8px;
+  }
+
+  .chat-section {
+    padding-bottom: 1rem;
+    margin-bottom: 2rem;
+  }
+
+  .chat-history {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 2rem;
+  }
+
+  .example-wrapper {
+    flex: 0 0 calc(50% - 1rem);
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .chat-bubble pre {
+    background: none;
+    padding: 0;
+    margin: 0;
+    font-family: inherit;
+    font-size: inherit;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+  }
+
+  .card-body {
+    padding: 2rem;
+    box-sizing: border-box;
+  }
+</style>
+
+</head>
+<body>
+
+  <section class="section" style="background-color:#efeff081" id="examples">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-six-fifths">
+        <h2 class="title is-3">Question-Answering Examples</h2>
+      </div>
+    </div>
+  
+    <div class="container is-max-widescreen">
+      <div class="columns is-centered">
+        <div class="column is-full">
+          <div class="card mb-4">
+            <div class="card-body" id="selected-question" style="max-height: calc(100vh - 160px); overflow-y: auto;">
+              <div class="chat-history"></div>
+            </div>
+          </div>
+  
+          <div class="field is-grouped is-grouped-centered">
+            <p class="control">
+              <button class="button is-dark is-rounded" id="prev-question">
+                <span class="icon"><i class="material-icons">keyboard_arrow_left</i></span>
+              </button>
+            </p>
+            <p class="control">
+              <button class="button is-dark is-rounded" id="next-question">
+                <span class="icon"><i class="material-icons">keyboard_arrow_right</i></span>
+              </button>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+<script>
+  var span = document.createElement("span");
+        span.className = "icon is-large";
+  const conversations = [
+    {
+      "description": "Example 1",
+      "turns": [
+        ["User", "Describe in detail what is visually and audibly happening in the video, including actions, objects, people, sounds, and environment.Be specific and concise.", "./static/sinsesizer.mp4"],
+        ["vl2", "\"The video shows a person using <b style='color:#d33; font-weight:550; font-family:inherit;'>a remote control to turn on a light. </b> The person is also seen using a colorful button on a <b style='color:#d33; font-weight:600; font-family:inherit;'> keyboard</b>, a white box with buttons and lights, and a musical instrument with colorful buttons. There is a close-up of the person’s hands<b style='color:#d33; font-weight:600; font-family:inherit;'> typing on a keyboard </b>with colorful buttons\"" ] ,
+        ["vl2-M2", "\"The video shows a person using a <b style='color:#d33; font-weight:550; font-family:inherit;'>remote control to turn on a light. </b>The person is also seen using a colorful button on a table, <b style='color:#d33; font-weight:550; font-family:inherit;'>keyboard, and electronic device.</b> There are also close-ups of the person's hands typing on a keyboard and using a music maker. The video also features concepts such as computer music, charging heads, and the idea of a <b style='color:#d33; font-weight:550; font-family:inherit;'>\'rich fruit\'' or \'fruit king.\'</b> \"" ] ,
+        ["vl2-ours", "\"The video shows a person using <b style='color:#337ab7; font-weight:550; font-family:inherit;'> a synthesizer to make music.</b> The person is playing the synthesizer with their hands, <b style='color:#337ab7; font-weight:600; font-family:inherit;'> creating a rhythmic and melodic sound.</b> The synthesizer has many buttons and knobs that the person is using to create different sounds. The video also shows a close-up of the person's hands as they play the <b style='color:#337ab7; font-weight:550; font-family:inherit;'>synthesizer.</b>\"" ]
+      ]
+    },
+    {
+      "description": "Example 2",
+      "turns": [
+        ["User", "Describe in detail what is visually and audibly happening in the video, including actions, objects, people, sounds, and environment.Be specific and concise.", "./static/hamster.mp4"],
+        ["qwen", "\"A blurry image of a hamster cage is shown, with a pink and white plastic swing hanging from the top. The cage is placed on a wooden surface, and there is a small green bowl filled with food on the left side of the cage. The cage is surrounded by a white fence, and there are some lights visible in the background.<b style='color:#d33; font-weight:550; font-family:inherit;'> The hamster is not visible in the video.</b>\""],
+        ["qwen-M2", "\"The video begins with a blurry close-up of a hand, which is partially obscuring the view. As the camera focuses, a wooden surface comes into view, revealing a small, colorful toy boat in the background. <b style='color:#d33; font-weight:550; font-family:inherit;'>The boat is pink with white and red accents, and it appears to be part of a larger playset.</b> The wooden surface is shiny, reflecting light and <b style='color:#d33; font-weight:550; font-family:inherit;'>possibly water droplets scattered across it</b>.\""],
+        ["qwen-ours", "\"The video depicts a close-up view of a hamster's cage, focusing on the hamster's activities. <b style='color:#337ab7; font-weight:550; font-family:inherit;'> The hamster is seen moving around inside the cage, which is placed on a wooden surface.</b> The cage is made of mesh material, allowing visibility of the hamster's movements. In the background, there are colorful objects, possibly<b style='color:#337ab7; font-weight:550; font-family:inherit;'> toys or accessories for the hamster,</b> adding a playful element to the scene.\""]
+      ]
+    },
+    {
+      "description": "Example 3",
+      "turns": [
+        ["User", "What is the man wearing and what is he holding?", "./static/discus_noaudio.mp4"],
+        ["vl2", "\"The man is wearing a white shirt and black shorts, and he is holding<b style='color:#d33; font-weight:550; font-family:inherit;'> a ball.</b>\""],
+        ["vl2-M2", "\"The man in the video is wearing a white shirt and black shorts. He is holding <b style='color:#d33; font-weight:550; font-family:inherit;'> a ball</b> and appears to be practicing his throwing skills on an open field.\""],
+        ["vl2-ours", "\"The man in the video is wearing a white shirt and black shorts. He is holding <b style='color:#337ab7; font-weight:550; font-family:inherit;'>a discus, which he spins around several times before throwing it off into the distance.</b>\""]
+      ]
+    },
+    {
+      "description": "Example 4",
+      "turns": [
+        ["User", "What type of practice is the man in the video doing?", "./static/taichi_noaudio.mp4"],
+        ["qwen", "\"The man in the video is practicing <b style='color:#d33; font-weight:550; font-family:inherit;'>martial arts.</b>\""],
+        ["qwen-M2", "\"The man in the video is performing a martial arts exercise, specifically a form of <b style='color:#d33; font-weight:550; font-family:inherit;'>martial arts known as 'Slant Flying'</b>. This exercise is part of a larger practice that includes various martial arts techniques. The video emphasizes the importance of maintaining balance and fluidity in movements, which are key aspects of martial arts training.\""],
+        ["qwen-ours", "\"The man in the video is performing <b style='color:#337ab7; font-weight:550; font-family:inherit;'>Tai Chi 24 Form, </b>a structured sequence of movements that enhance physical fitness, mental clarity, and internal energy flow through slow, balanced, and synchronized movements.\""],
+      ]
+    },
+    {
+      "description": "Example 5",
+      "turns": [
+        ["User", "What is shown in the video? Options: Tractor ploughing, Bulldozer, Lower price, Earth digging by excavator", "./static/excavator.mp4"],
+        ["vl2", "\" <b style='color:#d33; font-weight:550; font-family:inherit;'>Tractor ploughing</b>\""],
+        ["vl2-M2", "\" <b style='color:#d33; font-weight:550; font-family:inherit;'>Tractor ploughing</b>\""],
+        ["vl2-ours", "\"<b style='color:#337ab7; font-weight:550; font-family:inherit;'>Earth digging by excavator.</b>\""],
+      ]
+    },
+    {
+      "description": "Example 6",
+      "turns": [
+        ["User", "What is the main sound source of the video? Options : sound of wind, hail, The sound of a waterfall, thunder", "./static/hail.mp4"],
+        ["qwen", "\" <b style='color:#d33; font-weight:550; font-family:inherit;'>The sound of a waterfall.</b>\""],
+        ["qwen-M2", "\" <b style='color:#d33; font-weight:550; font-family:inherit;'>The sound of a waterfall.</b>\""],
+        ["qwen-ours", "\"<b style='color:#337ab7; font-weight:550; font-family:inherit;'>hail.</b>\""]
+      ]
+    },
+    {
+      "description": "Example 7",
+      "turns": [
+        ["User", "What type of environment is likely the setting for this audio recording?", "./static/audiocaps_qa_test_61(vl2_washing_hand).wav"],
+        ["vl2", "\"<b style='color:#d33; font-weight:550; font-family:inherit;'>Sink filling</b>\""],
+        ["vl2-ours", "\" The video shows <b style='color:#337ab7; font-weight:550; font-family:inherit;'>a man washing his hands in a sink. </b>The setting for this audio recording is likely a bathroom or toilet, as the man is washing his hands and there is a water fixture present\""],
+      ]
+    },
+    {
+      "description": "Example 8",
+      "turns": [
+        ["User", "What type of environment or setting is depicted in the audio recording?", "./static/audiocaps_qa_test_35(qwen_boat).wav"],
+        ["qwen", "\" <b style='color:#d33; font-weight:550; font-family:inherit;'>crowded indoor.</b>\""],
+        ["qwen-ours", "\"The audio recording depicts a setting where a <b style='color:#337ab7; font-weight:550; font-family:inherit;'>boat engine is operating,</b> suggesting a water-based environment sucha s a lake, river or sea.\""]
+      ]
+    }
+
+  ];
+
+
+let currentIndex = 0;
+
+function createChatRow(sender, text, imageSrc) {
+  const section = document.createElement("div");
+  const article = document.createElement("article");
+  article.className = "media";
+
+  if (sender !== "Video") {
+    const figure = document.createElement("figure");
+    figure.className = "media-left";
+    const span = document.createElement("span");
+    span.className = "icon is-large";
+    const emoji = document.createElement("span");
+
+    const emojiImg = document.createElement("img");
+    emojiImg.style.width = "50px";  
+    emojiImg.style.height = "50px";
+    emojiImg.style.borderRadius = "20%";  
+
+    if (sender === "User") {
+      emojiImg.src = "./static/user_12756012.png";
+      emojiImg.alt = "User";
+    } 
+    else if (sender.startsWith("vl2") || sender.startsWith("qwen")) {
+      emojiImg.src = "./static/idea_12667620.png";
+      emojiImg.alt = "User";
+    }
+
+
+
+span.appendChild(emojiImg);
+
+
+
+
+
+    span.appendChild(emoji);
+    figure.appendChild(span);
+    article.appendChild(figure);
+  }
+
+
+  const media = document.createElement("div");
+  media.className = "media-content";
+  const content = document.createElement("div");
+  content.className = "content";
+  const para = document.createElement("p");
+
+  const strong = document.createElement("strong");
+  if (sender === "User") strong.innerHTML = "<b>User</b>";
+  else if (sender === "vl2") strong.innerHTML = "<b>VideoLLaMA2</b>";
+  else if (sender === "vl2-M2") strong.innerHTML = "<b>VideoLLaMA + M<sup>2</sup>ConceptBase</b>";
+
+  else if (sender === "qwen") strong.innerHTML = "<b>Qwen2.5-Omni</b>";
+  else if (sender === "qwen-M2") strong.innerHTML = "<b>Qwen2.5-Omni + M<sup>2</sup>ConceptBase</b>";
+
+  else if (sender === "vl2-ours") strong.innerHTML = "<b>VideoLLaMA2 + VAT-KG (Ours) </b>";
+  else if (sender === "qwen-ours") strong.innerHTML = "<b>Qwen2.5-Omni + VAT-KG (Ours) </b>";
+
+  else strong.textContent = sender;
+  para.appendChild(strong);
+  para.appendChild(document.createElement("br"));
+
+  if (imageSrc) {
+    const isVideo = imageSrc.endsWith(".mp4") || imageSrc.endsWith(".webm");
+    const isAudio = imageSrc.endsWith(".wav") || imageSrc.endsWith(".mp3");
+    if (isVideo) {
+      const videoWrapper = document.createElement("div");
+      videoWrapper.className = "chat-video-wrapper";
+      const video = document.createElement("video");
+      video.src = imageSrc;
+      video.controls = true;
+      videoWrapper.appendChild(video);
+      para.appendChild(videoWrapper);
+    }else if (!isAudio) {
+    const img = document.createElement("img");
+    }
+    else if (imageSrc && imageSrc.endsWith(".wav")) {
+      const audio = document.createElement("audio");
+      audio.src = imageSrc;
+      audio.preload = "auto";
+
+      const button = document.createElement("button");
+      button.innerHTML = "🔊"; 
+      button.style.border = "none";
+      button.style.background = "none";
+      button.style.fontSize = "1.8rem";
+      button.style.marginBottom = "0.5rem"; 
+      button.style.cursor = "pointer";
+      button.title = "Play Audio";
+
+      button.onclick = () => {
+        if (audio.paused) {
+          audio.play();
+        } else {
+          audio.pause();
+        }
+      };
+
+      para.appendChild(button);
+      para.appendChild(audio);
+    }
+
+
+     else {
+      const img = document.createElement("img");
+      img.src = imageSrc;
+      img.style = "max-width:100%;max-height:300px;";
+      para.appendChild(img);
+    }
+    
+  }
+
+  const bubble = document.createElement("div");
+  bubble.className = "chat-bubble";
+  if (sender === "User") bubble.classList.add("user");
+  else if (sender === "vl2") bubble.classList.add("vl2");
+  else if (sender === "vl2-M2") bubble.classList.add("vl2");
+  else if (sender === "qwen") bubble.classList.add("qwen");
+  else if (sender === "qwen-M2") bubble.classList.add("qwen");
+  else if (sender === "vl2-ours") bubble.classList.add("vl2");
+  else if (sender === "qwen-ours") bubble.classList.add("qwen");
+
+
+  const pre = document.createElement("pre");
+  pre.innerHTML = text;
+  bubble.appendChild(pre);
+
+
+  para.appendChild(bubble);
+  content.appendChild(para);
+  media.appendChild(content);
+  article.appendChild(media);
+  section.appendChild(article);
+  return section;
+}
+
+function update_dialog_demo() {
+  const chatHistory = document.querySelector('.chat-history');
+  chatHistory.innerHTML = '';
+  for (let i = currentIndex; i < currentIndex + 2 && i < conversations.length; i++) {
+    const example = conversations[i];
+    const wrapper = document.createElement('div');
+    wrapper.className = 'example-wrapper';
+    example.turns.forEach(([sender, text, imageSrc]) => {
+      wrapper.appendChild(createChatRow(sender, text, imageSrc));
+    });
+    chatHistory.appendChild(wrapper);
+  }
+  chatHistory.scrollTop = chatHistory.scrollHeight;
+}
+
+document.addEventListener("DOMContentLoaded", function () {
+  update_dialog_demo();
+  document.getElementById('prev-question').addEventListener('click', () => {
+    currentIndex = Math.max(0, currentIndex - 2);
+    update_dialog_demo();
+  });
+  document.getElementById('next-question').addEventListener('click', () => {
+    currentIndex = Math.min(conversations.length - 2, currentIndex + 2);
+    update_dialog_demo();
+  });
+});
+
+
+</script>
+
+<br></br>
+
+    <!-- Overall Performance-->
+    <section class="section">
+      <div class="container">
+        <div class="columns is-centered has-text-centered">
+          <div class="column">
+            <h2 class="title is-3">Overall Performance</h2>
+            <div class="dataset-statistics">
+              <img src="./static/overall_performance.png" alt="Dataset statistics" style="width: 100%; margin-bottom:10px; height: auto;" />
+              <figcaption class="custom-caption">
+                <strong> Overall performance.</strong> 
+                We report M.J. (Model-as-Judge) scores; higher is better. Note that M2 ConceptBase does not contain audio, and thus cannot be applied to the Audio-QA task. VAT-KG yields the highest performance improvements, highlighted in <strong>bold</strong>.
+              </figcaption>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+<br>
+<br/>
+<!-- Footer -->
+<footer class="footer">
+  <div class="container is-max-widescreen">
+    <div class="content has-text-centered">
+      <a class="icon-link" href="">
+        <i class="fas fa-file-pdf"></i>
+      </a>
+      <a class="icon-link" href="">
+        <i class="fab fa-github"></i>
+      </a>
+    </div>
+    <div class="columns is-centered">
+      <div class="column is-8">
+        <div class="content">
+          <p>
+            This website is licensed under a <a rel="license"
+              href="http://creativecommons.org/licenses/by-sa/4.0/">Creative Commons Attribution-ShareAlike 4.0 International License</a>.
+          </p>
+          <p>
+            You are free to borrow the <a href="">source code</a> of this website,
+            just remember to provide credit and remove analytics if unnecessary
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
